@@ -7,10 +7,10 @@ import java.util.Map;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.Setup;
 
-import com.mitchellbosecke.pebble.PebbleEngine;
-import com.mitchellbosecke.pebble.error.PebbleException;
-import com.mitchellbosecke.pebble.extension.escaper.EscaperExtension;
-import com.mitchellbosecke.pebble.template.PebbleTemplate;
+import io.pebbletemplates.pebble.PebbleEngine;
+import io.pebbletemplates.pebble.error.PebbleException;
+import io.pebbletemplates.pebble.extension.escaper.EscaperExtension;
+import io.pebbletemplates.pebble.template.PebbleTemplate;
 
 public class Pebble extends BaseBenchmark {
 
@@ -20,8 +20,10 @@ public class Pebble extends BaseBenchmark {
 
     @Setup
     public void setup() throws PebbleException {
-        PebbleEngine engine = new PebbleEngine();
-        engine.getExtension(EscaperExtension.class).setAutoEscaping(false);
+        EscaperExtension escaperExtension = new EscaperExtension();
+        escaperExtension.setAutoEscaping(false);
+
+        PebbleEngine engine = new PebbleEngine.Builder().extension(escaperExtension).build();
         template = engine.getTemplate("templates/stocks.pebble.html");
         this.context = getContext();
     }

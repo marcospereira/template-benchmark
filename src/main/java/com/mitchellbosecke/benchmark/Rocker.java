@@ -10,9 +10,8 @@ import java.util.List;
 
 /**
  * Benchmark for Rocker template engine by Fizzed.
- * 
- * https://github.com/fizzed/rocker
- * 
+ * <a href="https://github.com/fizzed/rocker">Rocker Project</a>
+ *
  * @author joelauer
  */
 public class Rocker extends BaseBenchmark {

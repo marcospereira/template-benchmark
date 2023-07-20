@@ -9,31 +9,31 @@
 	<link rel="stylesheet" type="text/css" href="/css/style.css" media="all" />
 	<script type="text/javascript" src="/js/util.js"></script>
 	<style type="text/css">
-		/*<![CDATA[*/
-		body {
-			color: #333333;
-			line-height: 150%;
-		}
+/*<![CDATA[*/
+body {
+	color: #333333;
+	line-height: 150%;
+}
 
-		thead {
-			font-weight: bold;
-			background-color: #CCCCCC;
-		}
+thead {
+	font-weight: bold;
+	background-color: #CCCCCC;
+}
 
-		.odd {
-			background-color: #FFCCCC;
-		}
+.odd {
+	background-color: #FFCCCC;
+}
 
-		.even {
-			background-color: #CCCCFF;
-		}
+.even {
+	background-color: #CCCCFF;
+}
 
-		.minus {
-			color: #FF0000;
-		}
+.minus {
+	color: #FF0000;
+}
 
-		/*]]>*/
-	</style>
+/*]]>*/
+</style>
 
 </head>
 
@@ -55,7 +55,7 @@
 		<tbody>
 <!--/* Note that itemStat.odd works with index (starting with 0) whereas itemStat.count is starting with 1 */-->
 			<tr th:each="item: ${items}"
-				th:class="${itemStat.odd}? 'even' : 'odd'">
+				th:class="${itemStat.odd}? 'odd' : 'even'">
 				<td th:utext="${itemStat.count}"></td>
 				<td><a th:href="${'/stocks/' + item.symbol}"
 					th:utext="${item.symbol}"></a></td>

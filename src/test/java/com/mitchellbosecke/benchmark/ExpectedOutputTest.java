@@ -2,16 +2,17 @@ package com.mitchellbosecke.benchmark;
 
 import static org.junit.Assert.assertEquals;
 
-import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
-import java.io.InputStreamReader;
+import java.nio.file.Paths;
 import java.util.Locale;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.mitchellbosecke.pebble.error.PebbleException;
-
+import io.pebbletemplates.pebble.error.PebbleException;
 import freemarker.template.TemplateException;
 
 /**
@@ -75,21 +76,16 @@ public class ExpectedOutputTest {
     }
 
     private void assertOutput(String output) throws IOException {
-        assertEquals(readExpectedOutputResource(), output.replaceAll("\\s", ""));
+        String sanitizedOutput = prettyPrinted(Jsoup.parse(output));
+        assertEquals(readExpectedOutputResource(), sanitizedOutput);
     }
 
     private String readExpectedOutputResource() throws IOException {
-        StringBuilder builder = new StringBuilder();
-        try (BufferedReader in = new BufferedReader(new InputStreamReader(ExpectedOutputTest.class.getResourceAsStream("/expected-output.html")))) {
-            for (;;) {
-                String line = in.readLine();
-                if (line == null)
-                    break;
-                builder.append(line);
-            }
-        }
-        // Remove all whitespaces
-        return builder.toString().replaceAll("\\s", "");
+        File file = Paths.get("src/test/resources/expected-output.html").toFile();
+        return prettyPrinted(Jsoup.parse(file));
     }
 
+    private String prettyPrinted(Document doc) {
+        return doc.outputSettings(new Document.OutputSettings().prettyPrint(true)).toString();
+    }
 }

@@ -22,18 +22,7 @@ public class Mustache extends BaseBenchmark {
 
     @Setup
     public void setup() {
-        MustacheFactory mustacheFactory = new DefaultMustacheFactory() {
-
-            @Override
-            public void encode(String value, Writer writer) {
-                // Disable HTML escaping
-                try {
-                    writer.write(value);
-                } catch (IOException e) {
-                    throw new MustacheException(e);
-                }
-            }
-        };
+        MustacheFactory mustacheFactory = new DefaultMustacheFactory();
         template = mustacheFactory.compile("templates/stocks.mustache.html");
     }
 
@@ -53,8 +42,6 @@ public class Mustache extends BaseBenchmark {
      * This is a modified copy of
      * {@link com.github.mustachejava.util.DecoratedCollection} - we need the
      * first element at index 1.
-     *
-     * @param <T>
      */
     private class StockCollection extends AbstractCollection<StockView> {
 
@@ -96,7 +83,7 @@ public class Mustache extends BaseBenchmark {
         }
     }
 
-    class StockView {
+    static class StockView {
 
         public final int index;
 
